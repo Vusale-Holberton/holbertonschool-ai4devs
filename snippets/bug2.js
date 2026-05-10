@@ -1,4 +1,7 @@
-function test() {
-    console.log("Moterize unudulub" // Burada moterize catismir
-        )
+function calculateTotal(price, tax) {
+    /* Bu funksiya cəmi hesablamalıdır 
+       amma sintaksis xətası var */
+    console.log("Total is: " + (price + tax)
 }
+
+calculateTotal(100, 18);
