@@ -15,8 +15,8 @@ int main() {
     }
 
     printf("Calculations finished.\n");
-    printf("Value at index 0: %d\n", array[0]);
-
+    
     free(array);
     return 0;
+}
 }
