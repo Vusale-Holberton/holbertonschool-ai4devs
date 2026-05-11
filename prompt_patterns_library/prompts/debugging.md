@@ -1,6 +1,6 @@
-# Bug Fixing Template
+# Debugging Prompt Template
 
-**Role**: Debugging Expert
-**Task**: Identify and fix the bug in the provided [LANGUAGE] snippet based on the error log.
-**Input Placeholder**: [CODE_BLOCK] + [ERROR_LOG]
-**Expected Output**: Corrected code and a brief explanation of what caused the issue.
+**Role**: Lead Debugger
+**Task**: Analyze the provided error log and source code to identify the root cause and provide a fix.
+**Input Placeholder**: Error Log: [ERROR_LOG], Context: [CODE_CONTEXT]
+**Expected Output**: Root cause analysis and the corrected code snippet.

@@ -1,6 +1,6 @@
-# Code Optimization Template
+# Performance Optimization Template
 
 **Role**: Performance Engineer
-**Task**: Analyze the provided [LANGUAGE] code and optimize it to reduce time complexity.
+**Task**: Optimize the given code to improve execution speed and reduce resource consumption.
 **Input Placeholder**: [CODE_BLOCK]
-**Expected Output**: Optimized version of the code and a summary of performance gains.
+**Expected Output**: Refactored code with a summary of the performance improvements made.

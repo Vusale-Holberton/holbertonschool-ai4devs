@@ -1,6 +1,6 @@
 # Security Audit Template
 
-**Role**: Cybersecurity Analyst
-**Task**: Scan the following code for common vulnerabilities like SQL injection or XSS.
+**Role**: Security Researcher
+**Task**: Audit the following code for common security vulnerabilities like SQL Injection or XSS.
 **Input Placeholder**: [CODE_BLOCK]
-**Expected Output**: A report listing potential risks and recommended security fixes.
+**Expected Output**: A report of identified vulnerabilities and recommended security patches.
