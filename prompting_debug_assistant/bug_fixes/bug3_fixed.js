@@ -1,12 +1,19 @@
-function processUserData(user) {
-    let greeting = "Hello, " + user.name;
-    let ageInTenYears = user.age + 10;
-    let bioLength = user.profile?.bio?.length || 0; 
+function updateProfile(user) {
+    let firstName = user.firstName || "Anonymous";
+    let lastName = user.lastName || "User";
+    let displayName = firstName + " " + lastName;
     
-    console.log(greeting);
-    console.log("Age in 10 years: " + ageInTenYears);
-    console.log("Bio length: " + bioLength);
+    let info = user.settings?.theme?.color || "default-blue";
+    
+    console.log("Starting profile update...");
+    console.log("Name: " + displayName);
+    console.log("Theme Color: " + info);
+    console.log("Profile update successful.");
 }
 
-let currentUser = { name: "Vusala", age: 20 };
-processUserData(currentUser);
+let profileData = { 
+    firstName: "Vusala", 
+    age: 20 
+};
+
+updateProfile(profileData);

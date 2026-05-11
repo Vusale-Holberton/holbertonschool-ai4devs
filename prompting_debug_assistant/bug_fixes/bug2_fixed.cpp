@@ -4,13 +4,15 @@
 using namespace std;
 
 int main() {
-    string a = "10", b = "20";
+    string a = "100", b = "200";
     int c = stoi(a) + stoi(b);
-    int d = stoi(a) * 5;
+    
+    bool active_mode = true;
 
-    cout << "C-nin qiymeti: " << c << endl;
-    cout << "D-nin qiymeti: " << d << endl;
-    cout << "Hesablayici isleyir..." << endl;
+    cout << "Sum calculation is successful." << endl;
+    cout << "Sum: " << c << endl;
+    cout << "Status: " << (active_mode ? "Active" : "Inactive") << endl;
+    cout << "Program reached the end safely." << endl;
 
     return 0;
 }

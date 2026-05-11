@@ -2,15 +2,20 @@
 #include <stdlib.h>
 
 int main() {
-    int size = 5;
-    int *numbers = (int *)malloc(size * sizeof(int));
-    if (numbers == NULL) return 1;
-
-    for (int i = 0; i < size; i++) {
-        numbers[i] = i * 10;
-        printf("Number %d: %d\n", i, numbers[i]);
+    int size = 10;
+    int *array = (int *)malloc(size * sizeof(int));
+    
+    if (array == NULL) {
+        return 1;
     }
 
-    free(numbers);
+    for (int i = 0; i < size; i++) {
+        array[i] = i * 100;
+        printf("Index %d: %d\n", i, array[i]);
+    }
+
+    printf("Array processing finished.\n");
+    
+    free(array);
     return 0;
 }
