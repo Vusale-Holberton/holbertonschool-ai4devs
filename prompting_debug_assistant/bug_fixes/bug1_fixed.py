@@ -13,7 +13,8 @@ def process_numbers(data):
 
 values = [15, 25, 35, 45, 55]
 final_score = process_numbers(values)
-print(f"Processing complete. Average score: {final_score}")
+print("Processing complete.")
+print(f"Average score: {final_score}")
 
 empty_data = []
 print(f"Empty list result: {process_numbers(empty_data)}")

@@ -1,18 +1,20 @@
 #include <iostream>
 #include <string>
+#include <vector>
 
 using namespace std;
 
 int main() {
-    string a = "100", b = "200";
-    int c = stoi(a) + stoi(b);
+    string part1 = "100";
+    string part2 = "200";
     
+    int total_sum = stoi(part1) + stoi(part2);
+    int multiplier = stoi(part1) * 5;
     bool active_mode = true;
 
-    cout << "Sum calculation is successful." << endl;
-    cout << "Sum: " << c << endl;
+    cout << "Sum: " << total_sum << endl;
+    cout << "Product: " << multiplier << endl;
     cout << "Status: " << (active_mode ? "Active" : "Inactive") << endl;
-    cout << "Program reached the end safely." << endl;
 
     return 0;
 }

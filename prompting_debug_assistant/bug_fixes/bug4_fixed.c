@@ -4,7 +4,7 @@
 int main() {
     int size = 10;
     int *array = (int *)malloc(size * sizeof(int));
-    
+
     if (array == NULL) {
         return 1;
     }
@@ -14,8 +14,9 @@ int main() {
         printf("Index %d: %d\n", i, array[i]);
     }
 
-    printf("Array processing finished.\n");
-    
+    printf("Calculations finished.\n");
+    printf("Value at index 0: %d\n", array[0]);
+
     free(array);
     return 0;
 }

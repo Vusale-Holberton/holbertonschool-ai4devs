@@ -1,19 +1,19 @@
 function updateProfile(user) {
-    let firstName = user.firstName || "Anonymous";
-    let lastName = user.lastName || "User";
-    let displayName = firstName + " " + lastName;
+    console.log("Updating...");
+    
+    let displayName = (user.firstName || "Guest") + " " + (user.lastName || "");
+    let birthYear = 2026 - (user.age || 0);
     
     let info = user.settings?.theme?.color || "default-blue";
-    
-    console.log("Starting profile update...");
+
     console.log("Name: " + displayName);
-    console.log("Theme Color: " + info);
-    console.log("Profile update successful.");
+    console.log("Born: " + birthYear);
+    console.log("Theme: " + info);
 }
 
-let profileData = { 
-    firstName: "Vusala", 
-    age: 20 
+let profileData = {
+    firstName: "Vusala",
+    age: 20
 };
 
 updateProfile(profileData);
