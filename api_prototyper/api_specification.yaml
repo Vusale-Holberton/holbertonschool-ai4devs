@@ -22,6 +22,8 @@ paths:
           description: Successful response
         '401':
           description: Unauthorized
+        '500':
+          description: Internal server error
     post:
       summary: Create product
       security:
@@ -29,6 +31,10 @@ paths:
       responses:
         '201':
           description: Created
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
   /products/{id}:
     get:
       summary: Get product by ID
@@ -41,6 +47,8 @@ paths:
       responses:
         '200':
           description: Successful response
+        '404':
+          description: Product not found
     put:
       summary: Update product
       security:
@@ -48,6 +56,8 @@ paths:
       responses:
         '200':
           description: Updated
+        '404':
+          description: Product not found
     delete:
       summary: Delete product
       security:
@@ -55,6 +65,8 @@ paths:
       responses:
         '204':
           description: Deleted
+        '404':
+          description: Product not found
 components:
   securitySchemes:
     bearerAuth:
