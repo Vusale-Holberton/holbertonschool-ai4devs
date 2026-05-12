@@ -11,7 +11,6 @@ The purpose of this application is to help users organize their daily profession
 - **Dashboard Screen**: Overview of today’s tasks, priority levels, and a progress bar.
 - **Task Creation Screen**: A form to input task titles, descriptions, due dates, and categories.
 - **Calendar View Screen**: A monthly and weekly view of all scheduled tasks and deadlines.
-- **Settings Screen**: Options for profile management, notification preferences, and dark mode toggles.
 
 ## Actions
 - **Create Task**: Add new items with specific tags and deadlines.
