@@ -1,0 +1,20 @@
+graph TD
+    User((User)) --> Gateway[API Gateway]
+    
+    subgraph Microservices_Layer
+        Gateway --> Auth_S[Identity & Auth Service]
+        Gateway --> AI_S[AI Travel Planning Service]
+        Gateway --> Game_S[Gamification Service]
+        Gateway --> Logistic_S[Logistics Sandbox Service]
+        Gateway --> Content_S[Travel Content Service]
+        Gateway --> Social_S[Social & Peer Review Service]
+    end
+    
+    subgraph Data_Layer
+        Auth_S --- DB1[(Auth DB)]
+        AI_S --- DB2[(AI Graph DB)]
+        Game_S --- DB3[(Rewards DB)]
+        Logistic_S --- DB4[(Logistics DB)]
+        Content_S --- DB5[(Content DB)]
+        Social_S --- DB6[(Social DB)]
+    end
