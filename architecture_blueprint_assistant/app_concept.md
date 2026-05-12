@@ -1,4 +1,4 @@
-# Application Concept - SmartTravel
+# Application Concept: SmartTravel
 
 ## Application
 SmartTravel is an AI-powered travel itinerary planner designed to simplify trip organization for modern travelers. By leveraging machine learning, the application provides personalized recommendations, real-time logistics management, and collaborative tools for group travel.
