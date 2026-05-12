@@ -19,4 +19,8 @@ This monolithic architecture centralizes all business logic into a single codeba
 - **Authentication Flow**: Users must be verified by the **Auth Module** before the **Curriculum Manager** serves any content.
 - **Learning Cycle**: The **AI Path** analyzes data in the **DB**, then tells the **Curriculum Manager** which travel task to provide.
 - **Execution & Reward**: When a user runs logic in the **Sandbox**, the result is sent to the **Gamification Engine** to update rewards and streaks in the **DB**.
-- **Social Loop**: Completed tasks in the **Review System** or **Battle Arena** notify the **Gamification Engine** to adjust user levels and leaderboard standings.
+
+## Drawbacks of this Architecture
+- **Tight Coupling**: Changes in one module (e.g., Auth) may require re-deploying the entire application.
+- **Scalability Issues**: The entire monolith must be scaled even if only the AI module is under heavy load.
+- **Single Point of Failure**: A bug in any single component can cause the entire system to crash.
