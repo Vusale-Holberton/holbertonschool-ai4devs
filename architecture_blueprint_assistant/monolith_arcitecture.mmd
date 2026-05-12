@@ -1,0 +1,21 @@
+graph TD
+    User((User)) --> Frontend[Web & Mobile Frontend]
+    
+    subgraph Backend
+        Frontend --> AI[AI Adaptive Learning Path]
+        AI --> CM[Curriculum Manager]
+        CM --> Auth[Auth & Session Module]
+        CM --> Sandbox[Code Execution Sandbox]
+        CM --> Peer[Peer Review System]
+        CM --> Battle[Battle Arena Module]
+        
+        Auth --> GE[Gamification Engine]
+        Sandbox --> GE
+        Peer --> GE
+        
+        Auth --> DB[(Central Database)]
+        Sandbox --> DB
+        Peer --> DB
+        Battle --> DB
+        GE --> DB
+    end
