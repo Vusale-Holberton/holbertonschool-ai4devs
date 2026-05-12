@@ -1,19 +1,19 @@
-# Analysis of AI Video Generation Technologies
+# UI Concept - Task Manager App
 
-## Technical Capabilities
-- **Visual Fidelity**: High-quality texture rendering and realistic lighting effects in generated clips.
-- **Motion Mapping**: Accurate animation of static elements like water flow and cloud movement in image-to-video tasks.
-- **Stylistic Variety**: Ability to generate content in multiple art styles, including cinematic, anime, and 3D.
+## Purpose
+The purpose of this application is to help users organize their daily professional and personal tasks, track deadlines, and improve overall productivity through a clean and intuitive interface.
 
-## Current Limitations
-- **Anatomic Accuracy**: Occasional distortions in human features and complex physical movements.
-- **Temporal Stability**: Minor morphing of objects over the duration of the video.
-- **Physics Engine**: Struggles with complex interactions between multiple moving objects.
+## Users
+- **Individual Students**: To track study schedules and project deadlines.
+- **Project Managers**: To assign tasks to team members and monitor progress across multiple projects.
 
-## Use Cases
-- **Marketing**: Creating short, high-impact visual content for social media advertisements.
-- **Prototyping**: Rapidly visualizing scene concepts for film and game development.
+## Core Screens
+- **Dashboard Screen**: Overview of today’s tasks, priority levels, and a progress bar.
+- **Task Creation Screen**: A form to input task titles, descriptions, due dates, and categories.
+- **Calendar View Screen**: A monthly and weekly view of all scheduled tasks and deadlines.
+- **Settings Screen**: Options for profile management, notification preferences, and dark mode toggles.
 
-## Reflection
-- **What worked well**: The Text-to-Video feature was impressively accurate in following environmental prompts. Image-to-Video maintained the original image's integrity while adding fluid motion.
-- **What could be improved**: Temporal consistency needs work to prevent object morphing in clips longer than 5 seconds. Fine-tuning the motion strength is crucial to avoid blurring details.
+## Actions
+- **Create Task**: Add new items with specific tags and deadlines.
+- **Edit/Update Status**: Change task details or mark them as "Complete," "In Progress," or "Overdue."
+- **Filter Tasks**: View tasks based on priority (High, Medium, Low) or specific categories like "Work" or "Personal."
