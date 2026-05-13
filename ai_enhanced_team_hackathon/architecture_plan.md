@@ -1,90 +1,20 @@
-# Architecture Plan
+# High-Level Architecture Plan
 
-**Project: AI-Enhanced Team Collaboration Platform**
+## System Overview
+The AI-Enhanced Team Hackathon platform is built as a microservices-based application designed to integrate seamlessly with GitHub and Slack to enhance team productivity through automated intelligence.
 
----
+## Technical Stack
+- **Frontend:** React.js for the dashboard.
+- **Backend:** Python (FastAPI) for high-performance AI integration.
+- **Database:** PostgreSQL for structured data (Users, Tasks).
+- **AI Integration:** OpenAI API / LangChain for processing user stories and code analysis.
+- **Infrastructure:** Docker containers deployed on AWS.
 
-## 1. Overview
+## Core Components
+1. **API Gateway:** Routes requests between the frontend and microservices.
+2. **AI Logic Engine:** The brain of the system that processes natural language and provides insights.
+3. **Data Synchronizer:** Listens to GitHub Webhooks to keep tasks and code reviews updated in real-time.
+4. **Notification Service:** Dispatches AI-generated alerts to team members.
 
-This document describes the high-level architecture for an AI-Enhanced Team Collaboration Platform — a web application that enables teams to manage projects and tasks, communicate in context, and leverage AI-powered features such as task description improvement, project summarization, and sprint planning recommendations.
-
-The system follows a **client-server architecture** with a decoupled frontend, a RESTful backend API, a relational database, and integration with an external AI provider (Anthropic Claude API).
-
----
-
-## 2. Architecture Style
-
-**Pattern:** Monolithic Backend with Service Separation (modular monolith)
-
-This approach is chosen for hackathon-scale development speed while keeping the codebase organized enough to extract microservices later if needed.
-
-*   **Frontend:** Single Page Application (SPA)
-*   **Backend:** REST API server (Node.js / Express)
-*   **AI Layer:** Dedicated service module within the backend that interfaces with the Anthropic Claude API
-*   **Database:** PostgreSQL (relational)
-*   **Real-time:** WebSockets for live notifications
-*   **Auth:** JWT-based stateless authentication
-
-## 3. High-Level Component Diagram
-
-```text
-┌─────────────────────────────────────────────────────────────┐
-│                        CLIENT LAYER                         │
-│                                                             │
-│   ┌──────────────────────────────────────────────────┐      │
-│   │         React SPA (Vite + TailwindCSS)           │      │
-│   │  - Dashboard / Projects / Tasks / Notifications  │      │
-│   │  - AI-powered UI components (summaries, hints)   │      │
-│   └────────────────────┬─────────────────────────────┘      │
-└────────────────────────┼────────────────────────────────────┘
-                         │ HTTPS / WebSocket
-┌────────────────────────▼────────────────────────────────────┐
-│                       API LAYER                             │
-│                                                             │
-│   ┌──────────────────────────────────────────────────┐      │
-│   │          Node.js / Express REST API              │      │
-│   │                                                  │      │
-│   │  ┌──────────┐  ┌──────────┐  ┌───────────────┐  │      │
-│   │  │  Auth    │  │ Projects │  │     Tasks      │  │      │
-│   │  │ Module   │  │ Module   │  │    Module      │  │      │
-│   │  └──────────┘  └──────────┘  └───────────────┘  │      │
-│   │  ┌──────────┐  ┌──────────┐  ┌───────────────┐  │      │
-│   │  │Comments  │  │Notif.    │  │   AI Service  │  │      │
-│   │  │ Module   │  │ Module   │  │    Module     │  │      │
-│   │  └──────────┘  └──────────┘  └──────┬────────┘  │      │
-│   └─────────────────────────────────────┼────────────┘      │
-└─────────────────────────────────────────┼────────────────────┘
-                                          │ HTTPS
-                              ┌───────────▼──────────┐
-                              │  Anthropic Claude API │
-                              │  (claude-sonnet-4)    │
-                              └──────────────────────┘
-
-┌─────────────────────────────────────────────────────────────┐
-│                      DATA LAYER                             │
-│                                                             │
-│   ┌──────────────────────────────────────────────────┐      │
-│   │              PostgreSQL Database                 │      │
-│   │  Users | Projects | Tasks | Comments | Notifs   │      │
-│   └──────────────────────────────────────────────────┘      │
-└─────────────────────────────────────────────────────────────┘
-
-## 4. Frontend Architecture
-
-**Technology:** React 18 + Vite + TailwindCSS
-
-### Structure
-
-```text
-src/
-├── components/      # Reusable UI components (Button, Card, Modal)
-├── pages/           # Route-level page components
-│   ├── Dashboard.jsx
-│   ├── ProjectView.jsx
-│   ├── TaskView.jsx
-│   └── Login.jsx
-├── features/        # Feature slices (auth, projects, tasks, ai)
-├── hooks/           # Custom React hooks
-├── services/        # API client functions (axios)
-├── store/           # Global state (Zustand or React Context)
-└── utils/           # Helpers and formatters
+## Architecture Diagram Concept
+The system follows a "Data-Driven AI Loop" where user actions (coding, chatting) feed into the AI Engine, which then outputs optimizations directly back into the workflow.
