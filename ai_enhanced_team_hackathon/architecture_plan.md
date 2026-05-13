@@ -27,41 +27,40 @@ This approach is chosen for hackathon-scale development speed while keeping the 
 
 ## 3. High-Level Component Diagram
 graph TD
-    subgraph CLIENT_LAYER ["CLIENT LAYER"]
-        direction TB
-        React_Node["React SPA (Vite + TailwindCSS)
+    subgraph "CLIENT LAYER"
+        A["React SPA (Vite + TailwindCSS)
         - Dashboard / Projects / Tasks / Notifications
         - AI-powered UI components (summaries, hints)"]
     end
 
-    subgraph API_LAYER ["API LAYER"]
+    A -- "HTTPS / WebSocket" --> B
+
+    subgraph "API LAYER"
         direction TB
-        subgraph Express_Node ["Node.js / Express REST API"]
-            Auth["Auth
-            Module"]
-            Proj["Projects
-            Module"]
-            Task["Tasks
-            Module"]
-            Comm["Comments
-            Module"]
-            Notif["Notif.
-            Module"]
-            AISvc["AI Service
-            Module"]
+        B["Node.js / Express REST API"]
+        
+        subgraph Modules
+            direction LR
+            M1[Auth Module]
+            M2[Projects Module]
+            M3[Tasks Module]
+            M4[Comments Module]
+            M5[Notif. Module]
+            M6[AI Service Module]
         end
+        
+        B --- M1
+        B --- M2
+        B --- M3
+        B --- M4
+        B --- M5
+        B --- M6
     end
 
-    subgraph External_Node [" "]
-        Claude["Anthropic Claude API
-        (claude-sonnet-4)"]
-    end
+    M6 -- "HTTPS" --> C["Anthropic Claude API (claude-sonnet-4)"]
+    B -- "HTTPS" --> D
 
-    subgraph DATA_LAYER ["DATA LAYER"]
-        DB["PostgreSQL Database
+    subgraph "DATA LAYER"
+        D["PostgreSQL Database
         Users | Projects | Tasks | Comments | Notifs"]
     end
-
-    CLIENT_LAYER -- "HTTPS / WebSocket" --> API_LAYER
-    AISvc -- "HTTPS" --> Claude
-    API_LAYER -.-> DATA_LAYER
