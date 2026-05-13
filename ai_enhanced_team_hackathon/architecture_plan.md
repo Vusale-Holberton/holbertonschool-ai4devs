@@ -26,16 +26,41 @@ This approach is chosen for hackathon-scale development speed while keeping the 
 *   **Auth:** JWT-based stateless authentication
 
 ## 3. High-Level Component Diagram
+### 9. High-Level Component Diagram
 
-| Katman | Bileşenler ve Detaylar |
-| :--- | :--- |
-| *CLIENT LAYER* | *React SPA (Vite + TailwindCSS)*<br>• Dashboard / Projects / Tasks / Notifications<br>• AI-powered UI components (summaries, hints) |
-| Protocol | HTTPS / WebSocket |
-| *API LAYER* | *Node.js / Express REST API<br>• **Auth Module: Kimlik doğrulama<br>• **Projects Module: Proje yönetimi<br>• **Tasks Module: Görev yönetimi<br>• **Comments Module: Yorumlar<br>• **Notif. Module: Bildirimler<br>• **AI Service Module*: AI entegrasyonu |
-| Protocol | HTTPS |
-| *EXTERNAL SERVICES| **Anthropic Claude API* (claude-sonnet-4) |
-| *DATA LAYER* | *PostgreSQL Database*<br>• Users, Projects, Tasks, Comments, Notifs |
-## 4. Frontend Architecture
+```mermaid
+graph TD
+    subgraph Client_Layer [CLIENT LAYER]
+        direction TB
+        React_SPA["React SPA (Vite + TailwindCSS)
+        - Dashboard / Projects / Tasks / Notifications
+        - AI-powered UI components (summaries, hints)"]
+    end
+
+    subgraph API_Layer [API LAYER]
+        direction TB
+        subgraph Express_API [Node.js / Express REST API]
+            Auth[Auth Module]
+            Proj[Projects Module]
+            Task[Tasks Module]
+            Comm[Comments Module]
+            Notif[Notif. Module]
+            AISvc[AI Service Module]
+        end
+    end
+
+    subgraph External_API [External API]
+        Claude[Anthropic Claude API\n(claude-sonnet-4)]
+    end
+
+    subgraph Data_Layer [DATA LAYER]
+        DB["PostgreSQL Database
+        Users | Projects | Tasks | Comments | Notifs"]
+    end
+
+    Client_Layer -- "HTTPS / WebSocket" --> API_Layer
+    AISvc -- "HTTPS" --> Claude
+    API_Layer -.-> Data_Layer
 
 **Technology:** React 18 + Vite + TailwindCSS
 
@@ -56,11 +81,11 @@ src/
 └── utils/           # Helpers and formatters
 ### Key Design Decisions
 
-*   **Routing:** React Router v6 with protected routes for authenticated users
-*   **State Management:** Zustand for lightweight global state (user session, notifications)
-*   **API Communication:** Axios with interceptors for JWT token injection and error handling
-*   **Real-time:** WebSocket client (native or Socket.IO) for live notification updates
-*   **AI UX:** AI features are non-blocking; results render asynchronously with loading states
+  **Routing:** React Router v6 with protected routes for authenticated users
+  **State Management:** Zustand for lightweight global state (user session, notifications)
+  **API Communication:** Axios with interceptors for JWT token injection and error handling
+  **Real-time:** WebSocket client (native or Socket.IO) for live notification updates
+  **AI UX:** AI features are non-blocking; results render asynchronously with loading states
 ## 5. Backend Architecture
 
 **Technology:** Node.js + Express.js
@@ -110,16 +135,16 @@ src/
 The AI Service is a dedicated module inside the backend that encapsulates all calls to the Anthropic Claude API.
 ### Responsibilities
 
-*   **Task Description Improvement:** Sends the raw task description and returns a polished, structured version with suggested acceptance criteria.
-*   **Project Summary Generation:** Aggregates task data (titles, statuses, assignees) and generates a narrative summary.
-*   **Sprint Planning Recommendations:** Analyzes team workload and task metadata to suggest task-to-member assignments.
+ **Task Description Improvement:** Sends the raw task description and returns a polished, structured version with suggested acceptance criteria.
+ **Project Summary Generation:** Aggregates task data (titles, statuses, assignees) and generates a narrative summary.
+ **Sprint Planning Recommendations:** Analyzes team workload and task metadata to suggest task-to-member assignments.
 
 ### Design
 
-*   All Claude API calls go through a single `claudeClient.js` wrapper for centralized error handling and token logging.
-*   Prompts are stored as versioned templates in `src/ai/prompts/` for easy iteration.
-*   AI responses are validated before being saved to the database.
-*   Rate limiting is applied per user on AI endpoints (max 10 AI requests/hour).
+  All Claude API calls go through a single `claudeClient.js` wrapper for centralized error handling and token logging.
+  Prompts are stored as versioned templates in `src/ai/prompts/` for easy iteration.
+  AI responses are validated before being saved to the database.
+  Rate limiting is applied per user on AI endpoints (max 10 AI requests/hour).
 
 ```text
 aiService.js
@@ -130,36 +155,35 @@ aiService.js
 
 **Technology:** PostgreSQL 15
 
-*   **Connection Pooling:** `pg` (node-postgres) with a pool of 10 connections
-*   **Migrations:** Raw SQL migration files managed with `node-pg-migrate`
-*   **No ORM:** Direct parameterized queries to keep full control and performance transparency
-*   **Indexing Strategy:**
-    *   `tasks.project_id` — supports project board queries
-    *   `tasks.assignee_id` — supports "my tasks" views
-    *   `notifications.user_id + is_read` — supports unread notification queries
-    *   `comments.task_id` — supports comment thread loading
+  **Connection Pooling:** `pg` (node-postgres) with a pool of 10 connections
+  **Migrations:** Raw SQL migration files managed with `node-pg-migrate`
+  **No ORM:** Direct parameterized queries to keep full control and performance transparency
+   **Indexing Strategy:**
+      `tasks.project_id` — supports project board queries
+      `tasks.assignee_id` — supports "my tasks" views
+       `notifications.user_id + is_read` — supports unread notification queries
+       `comments.task_id` — supports comment thread loading
 
 ---
 
 ## 8. Authentication & Security
 
-*   **Auth Method:** JWT (JSON Web Tokens) with 7-day expiry, stored in `httpOnly` cookies
-*   **Password Hashing:** bcrypt with salt rounds = 12
-*   **Input Validation:** `express-validator` on all incoming request bodies
-*   **Rate Limiting:** `express-rate-limit` — global 100 req/min per IP; AI endpoints 10 req/hour per user
-*   **CORS:** Restricted to the frontend origin domain
-*   **Environment Variables:** All secrets (DB credentials, Claude API key, JWT secret) stored in `.env`, never committed
+   **Auth Method:** JWT (JSON Web Tokens) with 7-day expiry, stored in `httpOnly` cookies
+   **Password Hashing:** bcrypt with salt rounds = 12
+   **Input Validation:** `express-validator` on all incoming request bodies
+   **Rate Limiting:** `express-rate-limit` — global 100 req/min per IP; AI endpoints 10 req/hour per user*   **CORS:** Restricted to the frontend origin domain
+   **Environment Variables:** All secrets (DB credentials, Claude API key, JWT secret) stored in `.env`, never committed
 
 ---
 
 ### 9. Real-Time Notifications (Continued)
 
-*   **Technology**: Socket.IO (WebSocket with fallback)
-*   **Pattern**: Server emits events to user-specific rooms (e.g., `room:user_{id}`)
-*   **Events**:
+   **Technology**: Socket.IO (WebSocket with fallback)
+   **Pattern**: Server emits events to user-specific rooms (e.g., `room:user_{id}`)
+   **Events**:
     *   `notification:new` — triggers bell badge update
     *   `task:updated` — triggers board refresh for project members
-*   **Scalability Note**: For multi-instance deployment, a Redis pub/sub adapter can be added to Socket.IO
+   **Scalability Note**: For multi-instance deployment, a Redis pub/sub adapter can be added to Socket.IO
 
 ---
 
@@ -175,19 +199,19 @@ aiService.js
 
 ### Infrastructure (MVP)
 
-*   **Frontend**: Hosted on **Vercel** (static SPA, auto-deploy from GitHub)
-*   **Backend**: Hosted on **Render** or **Railway** (Node.js web service)
-*   **Database**: **Supabase** (managed PostgreSQL) or Railway PostgreSQL
+   **Frontend**: Hosted on **Vercel** (static SPA, auto-deploy from GitHub)
+   **Backend**: Hosted on **Render** or **Railway** (Node.js web service)
+   **Database**: **Supabase** (managed PostgreSQL) or Railway PostgreSQL
 
 ### Environment Variables
 ---
 
 ## 11. Development Workflow
 
-* **Repository:** `holbertonschool-ai4devs` → directory `ai_enhanced_team_hackathon`
-* **Branching:** `main` (stable) → feature branches → PRs with review
-* **Linting:** ESLint + Prettier on both frontend and backend
-* **API Testing:** Thunder Client or Postman collections committed to repo
+ **Repository:** `holbertonschool-ai4devs` → directory `ai_enhanced_team_hackathon`
+ **Branching:** `main` (stable) → feature branches → PRs with review
+ **Linting:** ESLint + Prettier on both frontend and backend
+ **API Testing:** Thunder Client or Postman collections committed to repo
 ## 12. Technology Stack Summary
 
 | Layer | Technology |
