@@ -1,25 +1,30 @@
-# Cross-Language Specification - Log Analyzer
+# Cross-Language Specification: Log Analyzer
 
-## Algorithm
-Parse server logs to extract meaningful insights and compute:
-- Total number of requests
-- Count of unique visitors (based on IP)
-- Overall error rate (percentage of 4xx and 5xx status codes)
+## Overview
+This specification defines a universal algorithm for analyzing server log files to extract key performance metrics.
 
-## Inputs
-- Sample log files in standard Apache/Nginx format (text-based).
+## Algorithm Description
+The analyzer must process a list of log strings and perform the following steps:
+1. **Parsing**: Each line must be split into components. The IP address is expected at the beginning (index 0), and the HTTP status code is expected at index 8.
+2. **Filtering**: Ignore any lines that do not follow the standard format or are empty.
+3. **Calculation**:
+    - **Total Requests**: Count all valid log entries.
+    - **Unique Visitors**: Count the number of distinct IP addresses using a Set.
+    - **Error Rate**: Calculate the percentage of requests where the status code is 400 or higher.
 
-## Outputs
-- A structured JSON object containing total_requests, unique_visitors, and error_rate.
+## Input Format
+- A list of strings, where each string represents a single log entry in the Common Log Format.
+- Example: `127.0.0.1 - - [10/Oct/2000:13:55:36 -0700] "GET /index.html HTTP/1.0" 200 2326`
 
-## Edge Cases
-- **Empty file:** Should return zero for all stats.
-- **Malformed entry:** Skip lines that don't match the expected log format without crashing.
-- **Large files:** Algorithm should process line-by-line to manage memory efficiency.
+## Output Format
+A dictionary/JSON object containing:
+- `total_requests` (Integer)
+- `unique_visitors` (Integer)
+- `error_rate` (Float, rounded to 2 decimal places)
 
-## Test Cases
-- `log_small.txt` -> 100 requests, 20 errors, 15 unique IPs
-- `log_empty.txt` -> 0 requests, 0 errors, 0 unique IPs
-- `log_malformed.txt` -> 5 valid requests, 2 skipped malformed lines
-- `log_all_errors.txt` -> 50 requests, 100% error rate
-- `log_single_visitor.txt` -> 20 requests from 1 unique IP
+## Test Requirements
+Implementations must pass at least 10 test cases, covering:
+- Empty logs.
+- Malformed log lines.
+- Logs with 100% error rates.
+- Logs with multiple requests from the same IP.
