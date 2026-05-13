@@ -26,36 +26,33 @@ This approach is chosen for hackathon-scale development speed while keeping the 
 *   **Auth:** JWT-based stateless authentication
 
 ## 3. High-Level Component Diagram
-```mermaid
 graph TD
-    subgraph Client_Layer [CLIENT LAYER]
+    subgraph Client_Layer ["CLIENT LAYER"]
         direction TB
-        React_SPA["React SPA (Vite + TailwindCSS)
-        - Dashboard / Projects / Tasks / Notifications
-        - AI-powered UI components (summaries, hints)"]
+        React_SPA["React SPA (Vite + TailwindCSS)<br/>- Dashboard / Projects / Tasks / Notifications<br/>- AI-powered UI components (summaries, hints)"]
     end
 
-    subgraph API_Layer [API LAYER]
+    subgraph API_Layer ["API LAYER"]
         direction TB
-        subgraph Express_API [Node.js / Express REST API]
-            Auth[Auth Module]
-            Proj[Projects Module]
-            Task[Tasks Module]
-            Comm[Comments Module]
-            Notif[Notif. Module]
-            AISvc[AI Service Module]
+        subgraph Express_API ["Node.js / Express REST API"]
+            Auth["Auth Module"]
+            Proj["Projects Module"]
+            Task["Tasks Module"]
+            Comm["Comments Module"]
+            Notif["Notif. Module"]
+            AISvc["AI Service Module"]
         end
     end
 
-    subgraph External_API [External API]
-        Claude[Anthropic Claude API\n(claude-sonnet-4)]
+    subgraph External_API ["External API"]
+        Claude["Anthropic Claude API (claude-sonnet-4)"]
     end
 
-    subgraph Data_Layer [DATA LAYER]
-        DB["PostgreSQL Database
-        Users | Projects | Tasks | Comments | Notifs"]
+    subgraph Data_Layer ["DATA LAYER"]
+        DB["PostgreSQL Database<br/>Users | Projects | Tasks | Comments | Notifs"]
     end
 
     Client_Layer -- "HTTPS / WebSocket" --> API_Layer
     AISvc -- "HTTPS" --> Claude
     API_Layer -.-> Data_Layer
+       
