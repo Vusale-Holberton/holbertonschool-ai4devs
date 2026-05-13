@@ -1,10 +1,10 @@
 # Risk Assessment - Legacy Codebase
 
-| Risk | Severity | Notes |
+| Risk | Severity | Notes & Action Points |
 | :--- | :--- | :--- |
-| Hardcoded credentials | High | Found in config.php; leads to unauthorized database access and data breaches. |
-| Missing unit tests | Medium | Critical modules untested; increases the risk of undetected bugs in production. |
-| Deprecated API usage | High | Relies on removed PHP functions; will cause system crashes during server updates. |
-| Tight coupling | Medium | Makes refactoring difficult; changes in one module may break unrelated features. |
-| No logging | Low | Debugging failures is harder; delays response time to critical system errors. |
-| SQL Injection vulnerability | High | User input not sanitized; allows attackers to steal or delete entire database records. |
+| Hardcoded credentials | High | Found in config.php; exposes DB to unauthorized access. **Action:** Move credentials to environment variables (.env). |
+| Missing unit tests | Medium | Untested critical modules increase regression risk. **Action:** Implement a testing framework like PHPUnit and cover core logic. |
+| Deprecated API usage | High | Relies on removed PHP functions, leading to crashes. **Action:** Audit codebase and replace deprecated functions with modern equivalents. |
+| Tight coupling | Medium | Modules are interdependent, making updates fragile. **Action:** Refactor code using Dependency Injection to decouple components. |
+| Inadequate Error Logging | Medium | Lack of structured logs prevents tracking security breaches or system failures. **Action:** Integrate a logging library (e.g., Monolog) for real-time monitoring. |
+| SQL Injection vulnerability | High | Unsanitized user inputs in legacy queries. **Action:** Use Prepared Statements and PDO for all database interactions to prevent data theft. |
