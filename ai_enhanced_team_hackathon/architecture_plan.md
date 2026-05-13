@@ -26,41 +26,45 @@ This approach is chosen for hackathon-scale development speed while keeping the 
 *   **Auth:** JWT-based stateless authentication
 
 ## 3. High-Level Component Diagram
-graph TD
-    subgraph "CLIENT LAYER"
-        A["React SPA (Vite + TailwindCSS)
-        - Dashboard / Projects / Tasks / Notifications
-        - AI-powered UI components (summaries, hints)"]
-    end
 
-    A -- "HTTPS / WebSocket" --> B
+```text
+┌─────────────────────────────────────────────────────────────┐
+│                        CLIENT LAYER                         │
+│                                                             │
+│   ┌──────────────────────────────────────────────────┐      │
+│   │         React SPA (Vite + TailwindCSS)           │      │
+│   │  - Dashboard / Projects / Tasks / Notifications  │      │
+│   │  - AI-powered UI components (summaries, hints)   │      │
+│   └────────────────────┬─────────────────────────────┘      │
+└────────────────────────┼────────────────────────────────────┘
+                         │ HTTPS / WebSocket
+┌────────────────────────▼────────────────────────────────────┐
+│                       API LAYER                             │
+│                                                             │
+│   ┌──────────────────────────────────────────────────┐      │
+│   │          Node.js / Express REST API              │      │
+│   │                                                  │      │
+│   │  ┌──────────┐  ┌──────────┐  ┌───────────────┐  │      │
+│   │  │  Auth    │  │ Projects │  │     Tasks      │  │      │
+│   │  │ Module   │  │ Module   │  │    Module      │  │      │
+│   │  └──────────┘  └──────────┘  └───────────────┘  │      │
+│   │  ┌──────────┐  ┌──────────┐  ┌───────────────┐  │      │
+│   │  │Comments  │  │Notif.    │  │   AI Service  │  │      │
+│   │  │ Module   │  │ Module   │  │    Module     │  │      │
+│   │  └──────────┘  └──────────┘  └──────┬────────┘  │      │
+│   └─────────────────────────────────────┼────────────┘      │
+└─────────────────────────────────────────┼────────────────────┘
+                                          │ HTTPS
+                              ┌───────────▼──────────┐
+                              │  Anthropic Claude API │
+                              │  (claude-sonnet-4)    │
+                              └──────────────────────┘
 
-    subgraph "API LAYER"
-        direction TB
-        B["Node.js / Express REST API"]
-        
-        subgraph Modules
-            direction LR
-            M1[Auth Module]
-            M2[Projects Module]
-            M3[Tasks Module]
-            M4[Comments Module]
-            M5[Notif. Module]
-            M6[AI Service Module]
-        end
-        
-        B --- M1
-        B --- M2
-        B --- M3
-        B --- M4
-        B --- M5
-        B --- M6
-    end
-
-    M6 -- "HTTPS" --> C["Anthropic Claude API (claude-sonnet-4)"]
-    B -- "HTTPS" --> D
-
-    subgraph "DATA LAYER"
-        D["PostgreSQL Database
-        Users | Projects | Tasks | Comments | Notifs"]
-    end
+┌─────────────────────────────────────────────────────────────┐
+│                      DATA LAYER                             │
+│                                                             │
+│   ┌──────────────────────────────────────────────────┐      │
+│   │              PostgreSQL Database                 │      │
+│   │  Users | Projects | Tasks | Comments | Notifs   │      │
+│   └──────────────────────────────────────────────────┘      │
+└─────────────────────────────────────────────────────────────┘
