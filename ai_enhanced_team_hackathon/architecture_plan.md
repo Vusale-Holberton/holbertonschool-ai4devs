@@ -71,17 +71,20 @@ This approach is chosen for hackathon-scale development speed while keeping the 
 
 ## 4. Frontend Architecture
 
-*Technology:* React 18+ Vite + TailwingCSS
-## Structure
+**Technology:** React 18 + Vite + TailwindCSS
+
+### Structure
+
+```text
 src/
-├── components/         # Reusable UI components (Button, Card, Modal)
-├── pages/              # Route-level page components
+├── components/      # Reusable UI components (Button, Card, Modal)
+├── pages/           # Route-level page components
 │   ├── Dashboard.jsx
 │   ├── ProjectView.jsx
 │   ├── TaskView.jsx
 │   └── Login.jsx
-├── features/           # Feature slices (auth, projects, tasks, ai)
-├── hooks/              # Custom React hooks
-├── services/           # API client functions (axios)
-├── store/              # Global state (Zustand or React Context)
-└── utils/              # Helpers and formatters
+├── features/        # Feature slices (auth, projects, tasks, ai)
+├── hooks/           # Custom React hooks
+├── services/        # API client functions (axios)
+├── store/           # Global state (Zustand or React Context)
+└── utils/           # Helpers and formatters
