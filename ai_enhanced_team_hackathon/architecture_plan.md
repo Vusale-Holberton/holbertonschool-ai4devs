@@ -26,37 +26,42 @@ This approach is chosen for hackathon-scale development speed while keeping the 
 *   **Auth:** JWT-based stateless authentication
 
 ## 3. High-Level Component Diagram
-```mermaid
 graph TD
-    subgraph Client_Layer ["CLIENT LAYER"]
+    subgraph CLIENT_LAYER ["CLIENT LAYER"]
         direction TB
-        React_SPA["React SPA (Vite + TailwindCSS)
+        React_Node["React SPA (Vite + TailwindCSS)
         - Dashboard / Projects / Tasks / Notifications
         - AI-powered UI components (summaries, hints)"]
     end
 
-    subgraph API_Layer ["API LAYER"]
+    subgraph API_LAYER ["API LAYER"]
         direction TB
-        subgraph Express_API ["Node.js / Express REST API"]
-            Auth["Auth Module"]
-            Proj["Projects Module"]
-            Task["Tasks Module"]
-            Comm["Comments Module"]
-            Notif["Notif. Module"]
-            AISvc["AI Service Module"]
+        subgraph Express_Node ["Node.js / Express REST API"]
+            Auth["Auth
+            Module"]
+            Proj["Projects
+            Module"]
+            Task["Tasks
+            Module"]
+            Comm["Comments
+            Module"]
+            Notif["Notif.
+            Module"]
+            AISvc["AI Service
+            Module"]
         end
     end
 
-    subgraph External_API ["External API"]
-        Claude["Anthropic Claude API (claude-sonnet-4)"]
+    subgraph External_Node [" "]
+        Claude["Anthropic Claude API
+        (claude-sonnet-4)"]
     end
 
-    subgraph Data_Layer ["DATA LAYER"]
+    subgraph DATA_LAYER ["DATA LAYER"]
         DB["PostgreSQL Database
         Users | Projects | Tasks | Comments | Notifs"]
     end
 
-    Client_Layer -- "HTTPS / WebSocket" --> API_Layer
+    CLIENT_LAYER -- "HTTPS / WebSocket" --> API_LAYER
     AISvc -- "HTTPS" --> Claude
-    API_Layer -.-> Data_Layer
-       
+    API_LAYER -.-> DATA_LAYER
